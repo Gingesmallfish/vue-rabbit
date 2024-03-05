@@ -3,7 +3,7 @@
 </script>
 
 <template>
-  <RouterView />
+  我是分类
 </template>
 
 <style scoped>
