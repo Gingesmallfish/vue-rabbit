@@ -1,18 +1,6 @@
 <script setup>
-import { getCategoryAPI } from "@/api/testAPI";
-import {onMounted, ref} from "vue";
-// 获取分类信息
-const categoryList = ref([]);
-const getCategory = async () => {
-  const res = await  getCategoryAPI();
-  console.log(res);
-  categoryList.value = res.result;
-}
-
-// 实列被挂载后调用
-onMounted(() => {
-  getCategory()
-})
+import {useCategoryStore} from "@/stores/category.js";
+const categoryStore = useCategoryStore();
 </script>
 
 <template>
@@ -22,10 +10,9 @@ onMounted(() => {
         <RouterLink to="/">小兔鲜</RouterLink>
       </h1>
       <ul class="app-header-nav">
-        <li class="home" v-for="item in categoryList" :key="item.id">
+        <li class="home" v-for="item in categoryStore.categoryList" :key="item.id">
           <RouterLink to="/">{{ item.name }}</RouterLink>
         </li>
-
       </ul>
       <div class="search">
         <i class="iconfont icon-search"></i>
