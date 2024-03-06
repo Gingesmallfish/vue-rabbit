@@ -5,8 +5,6 @@ import {useCategoryStore} from "@/stores/category.js";
 const {y} = useScroll(window)
 
 // 使用pinia中的数据
-
-
 const categoryStore = useCategoryStore()
 </script>
 

@@ -16,7 +16,6 @@ import HomeProduct from "@/views/Home/components/HomeProduct.vue";
   <HomeProduct/>
 </template>
 
-
 <style lang="scss" scoped>
 
 </style>
