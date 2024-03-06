@@ -14,9 +14,14 @@ export function getBannerAPI () {
  * @return {*}
 */
 
-export const findNewAPI = () => {
+export const findNewAPI = (params = {}) => {
+    // 默认1 商品2
+    const { distributionSite = '1' } = params
     return httpInstance({
-        url: '/home/new'
+        url: '/home/new',
+        params: {
+            distributionSite
+        }
     })
 }
 
