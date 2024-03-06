@@ -1,5 +1,5 @@
 <script setup>
-import {useCategoryStore} from "@/stores/category.js";
+import { useCategoryStore } from "@/stores/category.js";
 const categoryStore = useCategoryStore();
 </script>
 
@@ -125,4 +125,5 @@ const categoryStore = useCategoryStore();
       }
     }
   }
-}</style>
+}
+</style>

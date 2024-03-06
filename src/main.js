@@ -8,7 +8,7 @@ import router from './router'
 import '@/styles/common.scss'
 
 // 引入懒加载指令文件
-import {lazyPlugin} from "@/directives/index.js";
+import { lazyPlugin } from "@/directives/index.js";
 
 const app = createApp(App)
 

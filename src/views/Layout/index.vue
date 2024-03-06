@@ -6,25 +6,24 @@ import LayoutFixed from "@/views/Layout/components/LayoutFixed.vue";
 
 // 触发获取导航列表的action
 
-import {useCategoryStore} from "@/stores/category.js";
-import {onMounted} from "vue";
+import { useCategoryStore } from "@/stores/category.js";
+import { onMounted } from "vue";
 
 const categoryStore = useCategoryStore();
 
 onMounted(() => categoryStore.getCategory())
 
 </script>
+
 <template>
   <div>
-      <!-- 二级路由出口 -->
+    <!-- 二级路由出口 -->
     <LayoutFixed />
     <LayoutNav />
-    <LayoutHeader/>
+    <LayoutHeader />
     <RouterView />
     <LayoutFooter />
   </div>
 </template>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>

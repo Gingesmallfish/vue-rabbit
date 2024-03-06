@@ -1,5 +1,5 @@
 <script setup>
-import {useCategoryStore} from "@/stores/category.js";
+import { useCategoryStore } from "@/stores/category.js";
 
 const categoryStore = useCategoryStore();
 
@@ -10,7 +10,7 @@ const categoryStore = useCategoryStore();
     <ul class="menu">
       <li v-for="item in categoryStore.categoryList" :key="item">
         <RouterLink to="/">{{ item.name }}</RouterLink>
-        <RouterLink v-for="i in item.children.slice(0,2)" :key="i" to="/">{{ i.name }}</RouterLink>
+        <RouterLink v-for="i in item.children.slice(0, 2)" :key="i" to="/">{{ i.name }}</RouterLink>
         <!-- 弹层layer位置 -->
         <div class="layer">
           <h4>

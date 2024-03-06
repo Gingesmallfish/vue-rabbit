@@ -1,8 +1,8 @@
 <script setup>
-import {useScroll} from "@vueuse/core";
-import {useCategoryStore} from "@/stores/category.js";
+import { useScroll } from "@vueuse/core";
+import { useCategoryStore } from "@/stores/category.js";
 
-const {y} = useScroll(window)
+const { y } = useScroll(window)
 
 // 使用pinia中的数据
 const categoryStore = useCategoryStore()
@@ -11,7 +11,7 @@ const categoryStore = useCategoryStore()
 <template>
   <div class="app-header-sticky" :class="{ show: y > 78 }">
     <div class="container">
-      <RouterLink class="logo" to="/"/>
+      <RouterLink class="logo" to="/" />
       <!-- 导航区域 -->
       <ul class="app-header-nav ">
         <li class="home">
