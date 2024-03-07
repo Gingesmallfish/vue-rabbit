@@ -5,31 +5,31 @@ import {useRoute} from "vue-router";
 import GoodsItem from "@/views/Home/components/GoodsItem.vue";
 
 // 获取面包屑导航数据
-const route=useRoute()
+const route = useRoute()
 const categoryData = ref({});
-const getCategoryData=async ()=>{
-  const res=await getCategoryFilterAPI(route.params.id)
-  categoryData.value=res.result
+const getCategoryData = async () => {
+  const res = await getCategoryFilterAPI(route.params.id)
+  categoryData.value = res.result
 }
 
-onMounted(()=>getCategoryData())
+onMounted(() => getCategoryData())
 
 
 // 获取基础列表数据渲染
-const goodList=ref([])
-const reqData=ref({
-  categoryId:route.params.id,
-  page:1,
-  pageSize:20,
-  sortField:'publishTime'
+const goodList = ref([])
+const reqData = ref({
+  categoryId: route.params.id,
+  page: 1,
+  pageSize: 20,
+  sortField: 'publishTime'
 })
 
-const getGoodList=async ()=>{
+const getGoodList = async () => {
   const res = await getSubCategoryAPI(reqData.value);
   console.log(res)
-  goodList.value=res.result.items
+  goodList.value = res.result.items
 }
-onMounted(()=>getGoodList())
+onMounted(() => getGoodList())
 
 // tab切换回调
 const tabChange = () => {
@@ -39,8 +39,18 @@ const tabChange = () => {
 }
 
 // 加载更多
-const load = () => {
-  console.log('加载数据跟多')
+const disabled = ref(false)
+const load = async () => {
+  console.log('加载数据跟多');
+  // 获取下一页的数据
+  reqData.value.page++;
+  const res = await getSubCategoryAPI(reqData.value)
+  goodList.value = [...goodList.value, ...res.result.items];
+
+  // 加载完毕 停止监听
+  if (res.result.items.length === 0) {
+    disabled.value = true
+  }
 }
 </script>
 
@@ -63,7 +73,7 @@ const load = () => {
         <el-tab-pane label="最高人气" name="orderNum"></el-tab-pane>
         <el-tab-pane label="评论最多" name="evaluateNum"></el-tab-pane>
       </el-tabs>
-      <div class="body" v-infinite-scroll="load">
+      <div class="body" v-infinite-scroll="load" :infinite-scroll-disabled="disabled">
         <!-- 商品列表-->
         <GoodsItem v-for="goods in goodList" :goods="goods" :key="goods.id"/>
       </div>
