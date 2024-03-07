@@ -1,19 +1,29 @@
 <script setup>
 import {getCategoryAPI} from "@/apis/category.js";
-import { ref , onMounted} from 'vue'
+import {ref, onMounted} from 'vue'
 import {useRoute} from 'vue-router'
 import {getBannerAPI} from "@/apis/home.js";
+import GoodsItem from "@/views/Home/components/GoodsItem.vue";
+import {onBeforeRouteUpdate} from "vue-router";
 
 
 // 获取数据
 const categoryData = ref({})
 const route = useRoute()
-const getCategory = async () => {
-  const res = await getCategoryAPI(route.params.id)
+const getCategory = async (id = route.params.id) => {
+  const res = await getCategoryAPI(id)
   categoryData.value = res.result
 }
 
 onMounted(() => getCategory())
+
+// 目标？ 路由参数变化的时候 可以把分类数据接口重新发送
+onBeforeRouteUpdate((to) => {
+  console.log('路由变化')
+  // 存在问题：使用最新的路由参数请求最新的分类数据
+  console.log(to)
+  getCategory(to.params.id)
+})
 
 // 获取banner
 const bannerList = ref([])
@@ -38,16 +48,35 @@ onMounted(() => {
       <div class="bread-container">
         <el-breadcrumb separator=">">
           <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-          <el-breadcrumb-item>{{ categoryData.name  }}</el-breadcrumb-item>
+          <el-breadcrumb-item>{{ categoryData.name }}</el-breadcrumb-item>
         </el-breadcrumb>
       </div>
-    <!--   轮播图   -->
+      <!--   轮播图   -->
       <div class="home-banner">
         <el-carousel height="500px">
           <el-carousel-item v-for="item in bannerList" :key="item.id">
             <img :src="item.imgUrl" :alt="item.hrefUrl">
           </el-carousel-item>
         </el-carousel>
+      </div>
+      <div class="sub-list">
+        <h3>全部分类</h3>
+        <ul>
+          <li v-for="i in categoryData.children" :key="i.id">
+            <RouterLink :to="`/category/sub/${i.id}`">
+              <img :src="i.picture"/>
+              <p>{{ i.name }}</p>
+            </RouterLink>
+          </li>
+        </ul>
+      </div>
+      <div class="ref-goods" v-for="item in categoryData.children" :key="item.id">
+        <div class="head">
+          <h3>- {{ item.name }}-</h3>
+        </div>
+        <div class="body">
+          <GoodsItem v-for="goods in item.goods" :goods="goods" :key="goods.id"/>
+        </div>
       </div>
     </div>
   </div>
@@ -130,6 +159,7 @@ onMounted(() => {
     padding: 25px 0;
   }
 }
+
 .home-banner {
   width: 1240px;
   height: 500px;
