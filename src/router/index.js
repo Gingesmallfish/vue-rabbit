@@ -18,6 +18,7 @@ const router = createRouter({
                     component: Home
                 },
                 {
+                    // 二级路由以及组件
                     path: 'category/:id',
                     component: Category
                 },
