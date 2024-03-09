@@ -9,8 +9,10 @@ import {ElementPlusResolver} from 'unplugin-vue-components/resolvers'
 
 // https://vitejs.dev/config/
 export default defineConfig({
+    lintOnSave: false,
     plugins: [
         vue(),
+
         AutoImport({
             // 1, 配置elementPlus 采用 sass 样式配色系统
             resolvers: [ElementPlusResolver({importStyle: "sass"})]
