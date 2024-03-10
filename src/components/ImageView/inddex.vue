@@ -8,7 +8,7 @@ const imageList = [
   "https://yanxuan-item.nosdn.127.net/b52c447ad472d51adbdde1a83f550ac2.jpg",
   "https://yanxuan-item.nosdn.127.net/f93243224dc37674dfca5874fe089c60.jpg",
   "https://yanxuan-item.nosdn.127.net/f881cfe7de9a576aaeea6ee0d1d24823.jpg"
-]
+];
 
 // 1.小图切换大图显示
 const activeIndex = ref(0)
@@ -24,14 +24,19 @@ const {elementX, elementY, isOutside} = useMouseInElement((target));
 // 3.控制滑块跟随鼠标移动（监听elementX/Y变化，一旦变化 重新设置left/top）
 const left = ref(0);
 const top = ref(0)
-watch([elementX, elementY], () => {
+
+const positionX = ref(0);
+const positionY = ref(0);
+
+watch([elementX, elementY,isOutside], () => {
   // 如果鼠标没有移入到盒子里面 直接不执行后面的逻辑
   if (isOutside.value) {
     return
   }
-
   console.log('xy变化了');
-
+  // /如果鼠标没有移动到盒子里面 直接不执行后面的逻辑
+  if (isOutside.value) return
+  console.log('后续逻辑执行了');
   // 有效分为内控制滑块距离
   // 横向
   if (elementX.value > 100 && elementX.value < 300) {
@@ -41,7 +46,6 @@ watch([elementX, elementY], () => {
   if (elementY.value > 100 && elementY.value < 300) {
     top.value = elementY.value - 100
   }
-
   // 处理边界
   if (elementX.value > 300) {
     left.value = 200
@@ -55,6 +59,10 @@ watch([elementX, elementY], () => {
   if (elementY.value < 100) {
     top.value = 0;
   }
+
+  // 控制大图的显示
+  positionX.value = -left.value * 2
+  positionY.value = -top.value * 2
 })
 </script>
 
@@ -65,7 +73,7 @@ watch([elementX, elementY], () => {
     <div class="middle" ref="target">
       <img :src="imageList[activeIndex]" alt=""/>
       <!-- 蒙层小滑块 -->
-      <div class="layer" :style="{ left: `${left}px`, top: `${top}px` }"></div>
+      <div class="layer" v-show="!isOutside" :style="{ left: `${left}px`, top: `${top}px` }"></div>
     </div>
     <!-- 小图列表 -->
     <ul class="small">
@@ -77,10 +85,10 @@ watch([elementX, elementY], () => {
     <div class="large" :style="[
       {
         backgroundImage: `url(${imageList[0]})`,
-        backgroundPositionX: `0px`,
-        backgroundPositionY: `0px`,
+        backgroundPositionX: `${positionX}px`,
+        backgroundPositionY: `${positionY}px`,
       },
-    ]" v-show="false"></div>
+    ]" v-show="!isOutside"></div>
   </div>
 </template>
 
@@ -123,7 +131,6 @@ watch([elementX, elementY], () => {
 
   .small {
     width: 80px;
-
     li {
       width: 68px;
       height: 68px;
