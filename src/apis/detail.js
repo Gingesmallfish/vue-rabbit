@@ -11,7 +11,7 @@ export const getDetail = (id) => {
 }
 
 
-export const getHotGoodsAPI = ({id, type, limit = 3}) => {
+export const getHotGoodsAPI = ({ id, type, limit = 3 }) => {
     return request({
         url: '/goods/hot',
         params: {

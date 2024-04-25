@@ -41,7 +41,7 @@ const tabChange = () => {
 // 加载更多
 const disabled = ref(false)
 const load = async () => {
-  console.log('加载数据跟多');
+  // console.log('加载数据跟多');
   // 获取下一页的数据
   reqData.value.page++;
   const res = await getSubCategoryAPI(reqData.value)

@@ -19,5 +19,3 @@ app.use(router)
 app.use(lazyPlugin)
 app.use(componentPlugin)
 app.mount('#app')
-
-

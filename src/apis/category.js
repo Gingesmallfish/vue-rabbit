@@ -13,7 +13,7 @@ export function getCategoryAPI(id) {
 /**
  * @description: 获取二级分类列表数据
  * @param {*} id 分类id
- * @return {*}
+ * @return {*} 分类数据列表
  */
 export const getCategoryFilterAPI = (id) => {
     return request({
@@ -33,7 +33,7 @@ export const getCategoryFilterAPI = (id) => {
  *    pageSize: 20,
  *    sortField: 'publishTime' | 'orderNum' | 'evaluateNum'
  }
- * @return {*}
+ * @return {*} 导航数据
  */
 export const getSubCategoryAPI = (data) => {
     return request({

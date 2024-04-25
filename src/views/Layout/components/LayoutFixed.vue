@@ -12,7 +12,7 @@ const categoryStore = useCategoryStore()
   <div class="app-header-sticky" :class="{ show: y > 78 }">
     <div class="container">
       <RouterLink class="logo" to="/" />
-      <!-- 导航区域 -->
+      <!-- ?导航区域 -->
       <ul class="app-header-nav ">
         <li class="home">
           <RouterLink to="/">首页</RouterLink>
