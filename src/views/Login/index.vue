@@ -22,18 +22,32 @@ const rules = {
   // 自定义校验规则
   agree: [
     {
-      validator: (rules,value, caliback) => {
-          console.log(value);
-          // 自定义校验国际
-          // 勾选就通过， 
-          if (value) {
-            caliback()
-          } else {
-            caliback(new Error('请勾选我们的协议'))
-          }
+      validator: (rules, value, caliback) => {
+        console.log(value);
+        // 自定义校验国际
+        // 勾选就通过， 
+        if (value) {
+          caliback()
+        } else {
+          caliback(new Error('请勾选我们的协议'))
+        }
       }
     }
-  ]
+  ],
+}
+
+// 3. 获取form实例做统一校验
+const formRef = ref(null);
+const doLogin = () => {
+  // 调用实例方法
+  formRef.value.validate((valid) => {
+    // valid: 所有表单都通过校验，才为true
+    console.log(valid);
+    // 以valid作为判断条件， 如果通过校验才执行我们登录逻辑
+    if (valid) {
+      // TODO 
+    }
+  })
 }
 </script>
 
@@ -58,7 +72,7 @@ const rules = {
         </nav>
         <div class="account-box">
           <div class="form">
-            <el-form :model="form" :rules="rules" label-position="right" label-width="60px" status-icon>
+            <el-form ref="formRef" :model="form" :rules="rules" label-position="right" label-width="60px" status-icon>
               <el-form-item prop="account" label="账户">
                 <el-input v-model="form.account" />
               </el-form-item>
@@ -70,7 +84,7 @@ const rules = {
                   我已同意隐私条款和服务条款
                 </el-checkbox>
               </el-form-item>
-              <el-button size="large" class="subBtn">点击登录</el-button>
+              <el-button size="large" class="subBtn" @click="doLogin">点击登录</el-button>
             </el-form>
           </div>
         </div>
