@@ -1,5 +1,10 @@
 import request from "@/utils/http.js";
 
+/**
+ * 
+ * @param {*} id 
+ * @returns 
+ */
 export function getCategoryAPI(id) {
     return request({
         url: '/category',
